@@ -1,6 +1,5 @@
 ---
-- hosts: local
-  connection: local
+- hosts: all
   roles:
     - asemin08.webapp_static_role
   pre_tasks:
