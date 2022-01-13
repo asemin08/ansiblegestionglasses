@@ -1,0 +1,5 @@
+---
+- name: deploy gestion glasses using a role
+  hosts: localhost
+  roles:
+    - gestionglasses_role

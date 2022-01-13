@@ -1,0 +1,38 @@
+---
+# tasks file for GestionGlassesRole
+- name: download Install script docker
+  template:
+    src: "install-docker.sh.j2"
+    dest: "/home/{{ ansible_user }}/install-docker.sh"
+
+- name: "Run docker script"
+  command: "sh install-docker.sh"
+  args:
+    chdir: "/home/{{ ansible_user }}"
+
+- name: create odoo_files
+  file:
+    path: "/home/{{ ansible_user }}/odoo/o_config/"
+    recurse: yes
+    state: directory
+
+- name: set variable company_name
+  set_fact:
+    company_name: "{{ instance_name }}"
+    db_user: "{{ db_user }}"
+    db_pass: "{{ db_pass }}"
+
+- name: generate odoo_config_file 
+  template:
+    src: "odoo.conf.j2"
+    dest: "/home/{{ ansible_user }}/odoo/o_config/{{ company_name }}.conf"
+
+- name: generate docker-compose_file
+  template:
+    src: "docker-compose.yml.j2"
+    dest: "/home/{{ ansible_user }}/odoo/docker-compose.yml"
+
+- name: "Deploy apps"
+  command: "docker-compose up -d"
+  args:
+    chdir: "/home/{{ ansible_user }}/odoo"
