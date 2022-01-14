@@ -3,12 +3,7 @@
   become: true
   pre_tasks:
     - name: install dependencies
-      yum:
-        name: "epel-release"
-        state: "present"
-
-    - name: install dependencies
-      yum:
+      apt:
         name: "git"
         state: "present"
 
