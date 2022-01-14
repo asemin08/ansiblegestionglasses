@@ -2,4 +2,5 @@
 - hosts: all
   become: true
   roles:
-    - asemin08.gestion_glasses_role
+    - asemin08.gestionglassesrole
+
